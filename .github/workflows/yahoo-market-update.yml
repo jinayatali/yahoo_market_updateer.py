@@ -6,7 +6,7 @@ on:
     # Market hours in EST are 9:30 AM - 4:15 PM
     # In UTC that's 2:30 PM - 9:15 PM (winter) or 1:30 PM - 8:15 PM (summer)
     # Using winter time (EST): 14:30 - 21:15 UTC
-    - cron: '*/5 14-21 * * 1-5'  # Every 5 minutes, Mon-Fri, 14:30-21:15 UTC
+    - cron: '*/15 14-21 * * 1-5'  # Every 15 minutes, Mon-Fri, 14:30-21:15 UTC
     
     # Daily: 6:00 AM EST = 11:00 AM UTC
     - cron: '0 11 * * *'
