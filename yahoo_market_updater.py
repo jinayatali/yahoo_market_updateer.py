@@ -18,7 +18,8 @@ import time
 # ============================================================================
 
 # All 589 Yahoo Finance TSX Venture companies
-YAHOO_COMPANIES = ['ARH.V', 'ALTU.V', 'ATLE.V', 'BGE.V', 'BLU.V', 'SPI.V', 'CCEC.V', 'CTA.V', 
+YAHOO_COMPANIES = [
+    'ARH.V', 'ALTU.V', 'ATLE.V', 'BGE.V', 'BLU.V', 'SPI.V', 'CCEC.V', 'CTA.V', 
     'CFY.V', 'CEQ.V', 'EW.V', 'FHR.V', 'GX.V', 'HAM.V', 'HPL.V', 'LTX.V', 'LNGE.V', 
     'LTC.V', 'LCX.V', 'MAH.V', 'MCF.V', 'NZ.V', 'NGY.V', 'ORC-B.V', 'PFC.V', 'PCQ.V', 
     'VRY.V', 'PTC.V', 'STMP.V', 'SKK.V', 'TPC.V', 'TGH.V', 'TTG.V', 'VTX.V', 'WGT.V', 
@@ -84,7 +85,8 @@ YAHOO_COMPANIES = ['ARH.V', 'ALTU.V', 'ATLE.V', 'BGE.V', 'BLU.V', 'SPI.V', 'CCEC
     'GSD.V', 'OKAI.V', 'EVMT.V', 'FREQ.V', 'GENX.V', 'WOLF.V', 'NURS.V', 'IDL.V', 'IOT.V', 
     'KOVO.V', 'JUMP.V', 'LSL.V', 'MDX.V', 'NSCI.V', 'NAV.V', 'NPTH.V', 'NGMD.V', 'NRX.V', 
     'PCRX.V', 'QPT.V', 'RKV.V', 'SHRX.V', 'SBM.V', 'TTI.V', 'VPI.V', 'VVTM.V', 'WAVE.V', 
-    'ZCT.V', 'ZYUS.V']
+    'ZCT.V', 'ZYUS.V'
+]
 
 # Firebase configuration (from environment variable)
 FIREBASE_PROJECT_ID = 'canada-stocks-3c74f'
