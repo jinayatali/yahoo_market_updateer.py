@@ -18,7 +18,7 @@ import time
 # ============================================================================
 
 # All 589 Yahoo Finance TSX Venture companies
-YAHOO_COMPANIES = ['EPF.V']
+YAHOO_COMPANIES = ['ABA.V', 'ENA.V', 'GOK.V', 'GOOD.V', 'HIDE.V']
 
 # Firebase configuration (from environment variable)
 FIREBASE_PROJECT_ID = 'canada-stocks-3c74f'
