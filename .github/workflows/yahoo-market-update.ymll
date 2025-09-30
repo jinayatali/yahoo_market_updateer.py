@@ -1,0 +1,75 @@
+name: Update Yahoo Market Data
+
+on:
+  schedule:
+    # Intraday: Every 5 minutes during market hours (9:30 AM - 4:15 PM EST)
+    # Market hours in EST are 9:30 AM - 4:15 PM
+    # In UTC that's 2:30 PM - 9:15 PM (winter) or 1:30 PM - 8:15 PM (summer)
+    # Using winter time (EST): 14:30 - 21:15 UTC
+    - cron: '*/5 14-21 * * 1-5'  # Every 5 minutes, Mon-Fri, 14:30-21:15 UTC
+    
+    # Daily: 6:00 AM EST = 11:00 AM UTC
+    - cron: '0 11 * * *'
+    
+    # Weekly: Sunday 6:00 PM EST = 11:00 PM UTC (Sunday)
+    - cron: '0 23 * * 0'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      update_type:
+        description: 'Type of update (intraday, daily, or weekly)'
+        required: true
+        default: 'intraday'
+        type: choice
+        options:
+          - intraday
+          - daily
+          - weekly
+
+jobs:
+  update-market-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance firebase-admin
+      
+      - name: Determine update type
+        id: update_type
+        run: |
+          # Check which cron triggered or use manual input
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "type=${{ github.event.inputs.update_type }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" == "*/5 14-21 * * 1-5" ]; then
+            echo "type=intraday" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" == "0 11 * * *" ]; then
+            echo "type=daily" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" == "0 23 * * 0" ]; then
+            echo "type=weekly" >> $GITHUB_OUTPUT
+          else
+            # Default to intraday if unclear
+            echo "type=intraday" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Update market data
+        env:
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: |
+          python yahoo_market_updater.py ${{ steps.update_type.outputs.type }}
+      
+      - name: Report results
+        if: always()
+        run: |
+          echo "Update completed for: ${{ steps.update_type.outputs.type }}"
+          echo "Time: $(date)"
